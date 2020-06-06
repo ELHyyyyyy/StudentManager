@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fengzheng.programmer.dao.ClazzDao">
+    <select id="findList" parameterType="Map" resultType="Clazz">
+        SELECT * FROM db_student_ssm.clazz WHERE 1=1
+        <if test="clazzname!=null">
+            AND clazzname LIKE #{clazzname}
+        </if>
+        <if test="gradeId!=null">
+            AND gradeId = #{gradeId}
+        </if>
+        limit #{offset},#{pageSize}
+    </select>
+    <select id="findAll" resultType="Clazz" >
+        SELECT * FROM db_student_ssm.clazz
+    </select>
+    <select id="getTotal" resultType="Integer" parameterType="Map">
+         SELECT COUNT(id) FROM db_student_ssm.clazz WHERE 1=1
+        <if test="clazzname!=null">
+            AND clazzname LIKE #{clazzname}
+        </if>
+        <if test="gradeId!=null">
+            AND gradeId = #{gradeId}
+        </if>
+    </select>
+    <insert id="add" parameterType="Clazz">
+        INSERT INTO db_student_ssm.clazz(gradeId,clazzname, remark) VALUES(#{gradeId},#{clazzname},#{remark})
+    </insert>
+    <delete id="delete" parameterType="String" >
+         DELETE FROM db_student_ssm.clazz WHERE id IN (${value})
+    </delete>
+    <update id="edit" parameterType="Clazz">
+        UPDATE db_student_ssm.clazz SET gradeId=#{gradeId}, clazzname=#{clazzname},remark=#{remark} WHERE id=#{id}
+    </update>
+</mapper>

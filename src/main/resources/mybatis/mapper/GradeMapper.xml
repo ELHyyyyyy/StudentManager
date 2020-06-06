@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fengzheng.programmer.dao.GradeDao">
+    <select id="findList" parameterType="Map" resultType="Grade">
+        SELECT * FROM db_student_ssm.grade WHERE gradename LIKE #{gradename}
+        limit #{offset},#{pageSize}
+    </select>
+    <select id="findAll" resultType="Grade" >
+        SELECT * FROM db_student_ssm.grade
+    </select>
+    <select id="getTotal" resultType="Integer" parameterType="Map">
+         SELECT COUNT(id) FROM db_student_ssm.grade WHERE gradename LIKE #{gradename}
+    </select>
+    <insert id="add" parameterType="Grade">
+        INSERT INTO db_student_ssm.grade(gradename, remark) VALUES(#{gradename},#{remark})
+    </insert>
+    <delete id="delete" parameterType="String" >
+         DELETE FROM db_student_ssm.grade WHERE id IN (${value})
+    </delete>
+    <update id="edit" parameterType="Grade">
+        UPDATE db_student_ssm.grade SET gradename=#{gradename},remark=#{remark} WHERE id=#{id}
+    </update>
+</mapper>

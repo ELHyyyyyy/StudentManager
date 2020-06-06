@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fengzheng.programmer.dao.StudentDao">
+  	<select id="findByUserName" parameterType="String" resultType="Student">
+  		select * from db_student_ssm.student where stuname = #{stuname}
+  	</select>
+  	<select id="findList" parameterType="Map" resultType="Student">
+  		select * from db_student_ssm.student where 1=1
+  		<if test="stuname !=null">
+  			and stuname like #{stuname}
+  		</if>
+  		<if test="clazzId !=null">
+  			and clazzId = #{clazzId} 
+  		</if>
+  		limit #{offset},#{pageSize}
+  	</select>
+  	<select id="findAll" resultType="Student">
+  		select * from Student
+  	</select>
+  	<select id="getTotal" parameterType="Map" resultType="Integer">
+  		select count(id) from Student where 1=1 
+  		<if test="stuname !=null">
+  			and stuname like #{stuname}
+  		</if>
+  		<if test="clazzId !=null">
+  			and clazzId = #{clazzId} 
+  		</if>
+  	</select>
+  	<update id="add" parameterType="Student">
+  		insert into Student(sn,clazzId,stuname,password,sex,remark)
+  		values(#{sn},#{clazzId},#{stuname},#{password},#{sex},#{remark})
+  	</update>
+  	<update id="edit" parameterType="Student">
+  		update Student set
+  		stuname = #{stuname},clazzId = #{clazzId},password=#{password},
+  		sex=#{sex},remark = #{remark} where id = #{id}
+  	</update>
+  	<update id="delete" parameterType="String">
+  		delete from Student where id in (${value})
+  	</update>
+</mapper>

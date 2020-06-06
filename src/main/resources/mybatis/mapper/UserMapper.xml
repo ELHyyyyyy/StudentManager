@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fengzheng.programmer.dao.UserDao">
+    <select id="findByUserName" parameterType="String" resultType="User">
+        SELECT * FROM db_student_ssm.user WHERE username=#{username}
+    </select>
+    <select id="findList" parameterType="Map" resultType="User">
+        SELECT * FROM db_student_ssm.user WHERE username LIKE #{username}
+        limit #{offset},#{pageSize}
+    </select>
+    <select id="getTotal" resultType="Integer" parameterType="Map">
+         SELECT COUNT(id) FROM db_student_ssm.user WHERE username LIKE #{username}
+    </select>
+    <insert id="add" parameterType="User">
+        INSERT INTO db_student_ssm.user(username, password) VALUES(#{username},#{password})
+    </insert>
+    <delete id="delete" parameterType="String" >
+         DELETE FROM db_student_ssm.user WHERE id IN (${value})
+    </delete>
+    <update id="edit" parameterType="User">
+        UPDATE db_student_ssm.user SET username=#{username},password=#{password} WHERE id=#{id}
+    </update>
+</mapper>
